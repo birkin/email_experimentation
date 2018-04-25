@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4e55147db217bb4120f6e68cb8cad7bc37011457441ce0eb9d97308315625834"
+            "sha256": "35f3a6b72eed33535f4c1c5c7a8938b946e4910f060b4feb8a98014c325cd7f9"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -15,6 +15,12 @@
             }
         ]
     },
-    "default": {},
+    "default": {
+        "shellvars-py": {
+            "editable": true,
+            "git": "https://github.com/birkin/shellvars-py.git",
+            "ref": "a9208f837c819fec6291b6e2b36aae6d6fb2c59d"
+        }
+    },
     "develop": {}
 }

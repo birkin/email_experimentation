@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+shellvars-py = {git = "https://github.com/birkin/shellvars-py.git", editable = true}
 
 [dev-packages]
 
