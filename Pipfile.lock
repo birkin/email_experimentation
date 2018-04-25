@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "35f3a6b72eed33535f4c1c5c7a8938b946e4910f060b4feb8a98014c325cd7f9"
+            "sha256": "efb69904313e732c735e551b84d001d7de7d1b2e8ada2cf7f556239738b17bb1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,11 @@
         ]
     },
     "default": {
+        "rfc822py3": {
+            "editable": true,
+            "git": "https://github.com/birkin/rfc822py3.git",
+            "ref": "633cceba077075afa4d36b939fff547888a6b11e"
+        },
         "shellvars-py": {
             "editable": true,
             "git": "https://github.com/birkin/shellvars-py.git",
