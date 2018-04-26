@@ -3,7 +3,7 @@ import rfc822py3
 
 
 logging.basicConfig(
-    filename=os.environ['EMLEXP__LOG_PATH'],
+    # filename=os.environ['EMLEXP__LOG_PATH'],
     level=logging.DEBUG,
     format='[%(asctime)s] %(levelname)s [%(module)s-%(funcName)s()::%(lineno)d] %(message)s',
     datefmt='%d/%b/%Y %H:%M:%S',
@@ -13,6 +13,19 @@ log.debug( 'starting log' )
 
 
 MAIL_DOMAIN = os.environ['EMLEXP__MAIL_DOMAIN']
+EMAIL = os.environ['EMLEXP__EMAIL']
+PASSWORD = os.environ['EMLEXP__PASSWORD']
 
 
-print( 'hello world' )
+## connect
+try:
+    mailer = imaplib.IMAP4_SSL( MAIL_DOMAIN )
+    mailer.login( EMAIL, PASSWORD )
+    mailer.select( 'inbox' )   # connect's to inbox by default, but good to specify
+    log.debug( 'have mailer' )
+except Exception as e:
+    log.error( 'exception, ```%s```' % e )
+    mailer.close()
+    raise Exception( 'whoa: ```%s```' % e )
+
+print( 'EOF' )
