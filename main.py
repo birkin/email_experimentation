@@ -1,4 +1,4 @@
-import email, imaplib, logging, os, re, subprocess, sys
+import base64, email, imaplib, logging, os, pprint, re, subprocess, sys
 import rfc822py3
 
 
@@ -33,7 +33,26 @@ except Exception as e:
 
 ## search
 try:
-    ( gms, data ) = mailer.search( b'(UNSEEN FROM "brown.edu" HEADER Subject "test sierra_to_annex")' )
+    ( ok_response, id_list ) = mailer.search( 'utf-8', b'Subject', b'"test sierra_to_annex"' )  # response, eg, ```('OK', [b'2 3'])```
+except Exception as e:
+    log.error( 'exception, ```%s```' % e )
+    if mailer:
+        log.debug( 'closing mailer and logging out' )
+        mailer.close()
+        mailer.logout()
+
+## process
+try:
+    recent_id = id_list[0].split()[-1]  # str; & id_list is really a list of a single space-delimited string
+    ( ok_response, rfc822_obj_list ) = mailer.fetch( recent_id, '(RFC822)' )
+    email_rfc822_tuple = rfc822_obj_list[0]
+    email_rfc822_bytestring = email_rfc822_tuple[1]  # tuple[0] example, ```b'3 (RFC822 {5049}'```
+    email_obj = email.message_from_string( email_rfc822_bytestring.decode('utf-8') )  # email is a standard python import
+    items_list_of_tuples = email_obj.items()  # eg, [ ('Subject', 'the subject text'), () ] -- BUT does NOT provide body-content
+    log.debug( 'items_list_of_tuples, ```%s```' % pprint.pformat(items_list_of_tuples) )
+    body_message = email_obj.get_payload()  # body-content
+    log.debug( 'body_message, ```%s```' % body_message )
+    log.debug( 'type(body_message), `%s`' % type(body_message) )
 except Exception as e:
     log.error( 'exception, ```%s```' % e )
     if mailer:
