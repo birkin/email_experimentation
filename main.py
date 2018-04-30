@@ -25,15 +25,20 @@ try:
     log.debug( 'have mailer' )
 except Exception as e:
     log.error( 'exception, ```%s```' % e )
-    mailer.close()
-    raise Exception( 'whoa: ```%s```' % e )
-finally:
     if mailer:
-        log.debug( 'closing and logging out' )
+        log.debug( 'closing mailer and logging out' )
         mailer.close()
         mailer.logout()
-    # if f is not None:
-        # f.close()
+    raise Exception( 'whoa: ```%s```' % e )
 
+## search
+try:
+    ( gms, data ) = mailer.search( b'(UNSEEN FROM "brown.edu" HEADER Subject "test sierra_to_annex")' )
+except Exception as e:
+    log.error( 'exception, ```%s```' % e )
+    if mailer:
+        log.debug( 'closing mailer and logging out' )
+        mailer.close()
+        mailer.logout()
 
 print( 'EOF' )
