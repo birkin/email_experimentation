@@ -8,6 +8,7 @@ shellvars-py = {git = "https://github.com/birkin/shellvars-py.git", editable = t
 "rfc822py3" = {git = "https://github.com/birkin/rfc822py3.git", editable = true}
 
 [dev-packages]
+ipython = "*"
 
 [requires]
 python_version = "3.6"
