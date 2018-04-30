@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 shellvars-py = {git = "https://github.com/birkin/shellvars-py.git", editable = true}
-"rfc822py3" = {git = "https://github.com/birkin/rfc822py3.git", editable = true}
 
 [dev-packages]
 ipython = "*"
