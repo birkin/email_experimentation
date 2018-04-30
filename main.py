@@ -27,5 +27,13 @@ except Exception as e:
     log.error( 'exception, ```%s```' % e )
     mailer.close()
     raise Exception( 'whoa: ```%s```' % e )
+finally:
+    if mailer:
+        log.debug( 'closing and logging out' )
+        mailer.close()
+        mailer.logout()
+    # if f is not None:
+        # f.close()
+
 
 print( 'EOF' )
