@@ -50,13 +50,11 @@ try:
     log.debug( 'is_multipart(), `%s`' % email_obj.is_multipart() )
     items_list_of_tuples = email_obj.items()  # eg, [ ('Subject', 'the subject text'), () ] -- BUT does NOT provide body-content
     log.debug( 'items_list_of_tuples, ```%s```' % pprint.pformat(items_list_of_tuples) )
-    body_message = email_obj.get_payload()  # body-content
+    body_message = email_obj.get_payload( decode=True )  # body-content in bytes
     log.debug( 'type(body_message), `%s`' % type(body_message) )
     log.debug( 'body_message, ```%s```' % body_message )
-    tmp = body_message.replace( '\r', '' )
-    tmp = tmp.replace( '=\n', '' )
-    tmp = tmp.replace( '=', '%' )
-    final = urllib.parse.unquote( tmp )
+    final = body_message.decode( 'utf-8' )
+    # final = urllib.parse.unquote( tmp )
     log.debug( 'final, ```%s```' % final )
 except Exception as e:
     log.error( 'exception, ```%s```' % e )
@@ -65,5 +63,30 @@ finally:
         log.debug( 'closing mailer and logging out' )
         mailer.close()
         mailer.logout()
+
+# try:
+#     recent_id = id_list[0].split()[-1]  # str; & id_list is really a list of a single space-delimited string
+#     ( ok_response, rfc822_obj_list ) = mailer.fetch( recent_id, '(RFC822)' )
+#     email_rfc822_tuple = rfc822_obj_list[0]
+#     email_rfc822_bytestring = email_rfc822_tuple[1]  # tuple[0] example, ```b'3 (RFC822 {5049}'```
+#     email_obj = email.message_from_string( email_rfc822_bytestring.decode('utf-8') )  # email is a standard python import
+#     log.debug( 'is_multipart(), `%s`' % email_obj.is_multipart() )
+#     items_list_of_tuples = email_obj.items()  # eg, [ ('Subject', 'the subject text'), () ] -- BUT does NOT provide body-content
+#     log.debug( 'items_list_of_tuples, ```%s```' % pprint.pformat(items_list_of_tuples) )
+#     body_message = email_obj.get_payload()  # body-content in unicode
+#     log.debug( 'type(body_message), `%s`' % type(body_message) )
+#     log.debug( 'body_message, ```%s```' % body_message )
+#     tmp = body_message.replace( '\r', '' )
+#     tmp = tmp.replace( '=\n', '' )
+#     tmp = tmp.replace( '=', '%' )
+#     final = urllib.parse.unquote( tmp )
+#     log.debug( 'final, ```%s```' % final )
+# except Exception as e:
+#     log.error( 'exception, ```%s```' % e )
+# finally:
+#     if mailer:
+#         log.debug( 'closing mailer and logging out' )
+#         mailer.close()
+#         mailer.logout()
 
 print( 'EOF' )
